@@ -126,7 +126,7 @@ tape('trie', function (t) {
   })
 
   t.test('.emit() mount subrouters', function (t) {
-    t.plan(5)
+    t.plan(8)
 
     var r4 = wayfarer()
     var r3 = wayfarer()
@@ -157,17 +157,17 @@ tape('trie', function (t) {
     r7.on('/foo', r8)
     r7('/foo/bin/bar')
 
-    // var r10 = wayfarer()
-    // var r11 = wayfarer()
-    // var r12 = wayfarer()
-    // r12.on('/:grandchild', function (param) {
-    //   t.equal(param.parent, 'bin', 'nested 3 levels with params')
-    //   t.equal(param.child, 'bar', 'nested 3 levels with params')
-    //   t.equal(param.grandchild, 'baz', 'nested 3 levels with parmas')
-    // })
-    // r11.on('/:child', r12)
-    // r10.on('/foo/:parent', r11)
-    // r10('/foo/bin/bar/baz')
+    var r10 = wayfarer()
+    var r11 = wayfarer()
+    var r12 = wayfarer()
+    r12.on('/:grandchild', function (param) {
+      t.equal(param.parent, 'bin', 'nested 3 levels with params')
+      t.equal(param.child, 'bar', 'nested 3 levels with params')
+      t.equal(param.grandchild, 'baz', 'nested 3 levels with parmas')
+    })
+    r11.on('/:child', r12)
+    r10.on('/foo/:parent', r11)
+    r10('/foo/bin/bar/baz')
   })
 
   t.test('nested routes should call parent default route', function (t) {

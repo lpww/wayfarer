@@ -109,16 +109,12 @@ Trie.prototype.mount = function (route, trie) {
 
   var split = route.replace(/^\//, '').split('/')
   var node = null
-  var key = null
+  var key = split[0]
 
   if (split.length === 1) {
-    key = split[0]
     node = this.create(key)
   } else {
-    var headArr = split.splice(0, split.length - 1)
-    var head = headArr.join('/')
-    key = split[0]
-    node = this.create(head)
+    node = this.create(route)
   }
 
   mutate(node.nodes, trie.nodes)
